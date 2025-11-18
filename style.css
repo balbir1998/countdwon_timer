@@ -10,10 +10,14 @@ body {
 
 .container {
     max-width: 1170px;
-    display: flex;
+    display: none;
     align-items: center;
     gap: 3rem;
     margin: 5rem auto;
+}
+
+.loaded .container {
+    display: flex;
 }
 
 .container>* {
@@ -85,6 +89,11 @@ body {
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 2px;
+}
+
+.countdwon-timer-container .expired {
+    color: #102A42;
+    letter-spacing: 1px;
 }
 
 @media (width <=992px) {
