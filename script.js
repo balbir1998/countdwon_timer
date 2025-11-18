@@ -5,23 +5,22 @@ const hoursCount = document.querySelector(".hours-count");
 const minutesCount = document.querySelector(".min-count");
 const secondsCount = document.querySelector(".sec-count");
 
-let dateObj = JSON.parse(localStorage.getItem("giveawayDate"));
+let timeStamp = parseInt(localStorage.getItem("timestamp"));
 
-if (!dateObj) {
-    console.log("okay");
-    let currentDate = new Date();
+if (!timeStamp) {
+    // 10 days from now
+    const tenDays = 10 * 24 * 60 * 60 * 1000;
+    const milliseconds = Date.now() + tenDays;
 
-    dateObj = {
-        tempYear: currentDate.getFullYear(),
-        tempMonth: currentDate.getMonth(),
-        tempDate: currentDate.getDate() + 10,
-    }
+    let newDate = new Date(milliseconds);
+    newDate.setHours(11, 30, 0, 0);
 
-    localStorage.setItem("giveawayDate", JSON.stringify(dateObj));
+    timeStamp = newDate.getTime();
+    localStorage.setItem("timestamp", timeStamp);
 }
 
 
-const futureDate = new Date(dateObj.tempYear, dateObj.tempMonth, dateObj.tempDate, 11, 30, 0);
+const futureDate = new Date(timeStamp);
 const [day, date, month, year, hour, minute, format] = formatDateAndTime(futureDate);
 giveawayInfo.innerText = `giveaway ends on ${day}, ${date} ${month} ${year}, ${hour}:${minute}${format}`;
 let id = setInterval(() => counter(futureDate, id), 1000);
@@ -31,7 +30,7 @@ function counter(futureDate, id) {
     if (milliseconds < 0) {
         clearInterval(id);
         timerContainer.innerHTML = `<h4 class="expired">Sorry, this giveaway has expired!</h4>`;
-        localStorage.removeItem("giveawayDate");;
+        localStorage.removeItem("timestamp");;
         return;
     }
 
@@ -57,24 +56,8 @@ function formatText(value) {
 }
 
 function formatDateAndTime(date) {
-    const dateObj = date.toLocaleDateString('en-IN', { dateStyle: "full" }).split(" ");
-    dateObj.forEach((el, idx) => {
-        if (el.includes(",")) {
-            dateObj[idx] = el.replace(",", "");
-        }
-    });
+    const formatedDate = date.toLocaleDateString('en-IN', { dateStyle: "full" }).replaceAll(",", "").split(" ");
+    const formatedTime = date.toLocaleTimeString('en-IN', { timeStyle: "short" }).replaceAll(":", " ").split(" ");
 
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let format = "am";
-    if (hour >= 12) {
-        format = "pm";
-        if (hour > 12) hour -= 12;
-    }
-    if (hour === 0) hour = 12;
-    if (hour < 10) hour = `0${hour}`;
-    if (minute < 10) minute = `0${minute}`;
-
-
-    return [...dateObj, hour, minute, format];
+    return [...formatedDate, ...formatedTime];
 }
