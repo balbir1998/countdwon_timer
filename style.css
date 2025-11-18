@@ -3,5 +3,92 @@
 }
 
 body {
-    margin: 0;
+    background-color: hsl(210, 36%, 96%);
+    font-family: "Roboto", sans-serif;
+    margin: 1rem;
+}
+
+.container {
+    max-width: 1170px;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin: 5rem auto;
+}
+
+.container>* {
+    width: 100%;
+}
+
+.image-container {
+    display: flex;
+    align-items: center;
+}
+
+.image-container img {
+    width: 100%;
+}
+
+.container-text>* {
+    width: 100%;
+}
+
+.title,
+.giveaway-info {
+    margin: unset;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.25rem;
+}
+
+.container-text .title {
+    font-size: 1.75rem;
+    color: #1A6AA2;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+}
+
+.container-text .giveaway-info {
+    text-transform: capitalize;
+    color: #102A42;
+    line-height: 1.25;
+}
+
+.container-text p {
+    margin: 2rem 0;
+    color: #829AB0;
+    line-height: 1.5;
+}
+
+.countdwon-timer-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.deadline-format {
+    background-color: #102A42;
+    color: #ffffff;
+    width: 5rem;
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.deadline-format h4 {
+    margin: unset;
+    margin-bottom: 0.25rem;
+    font-size: 2rem;
+}
+
+.deadline-format span {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+}
+
+@media (width <=992px) {
+    .container {
+        flex-direction: column;
+    }
 }
